@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+
+jobs:
+  build:
+    name: Windows Build
+    runs-on: ubuntu-latest
+    steps:
+      # Checks-out repository under $GITHUB_WORKSPACE
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      #  with: repo isn't currently lfs
+      #    lfs: true
+
+      # Cache Unity Library folder.. Library is in ignore right now
+      #- name: Cache
+      #  uses: actions/cache@v2.1.2
+      #  with:
+      #    path: Library
+      #    key: Library
+
+      # Build the Project
+      - name: Unity - Builder
+        uses: webbertakken/unity-builder@v1.4
+        with:
+          unityVersion: 2019.4.13f1
+          targetPlatform: StandaloneWindows64
